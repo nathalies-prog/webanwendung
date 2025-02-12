@@ -35,12 +35,15 @@ app.get("/reset", (c) => {
 });
 
 app.get("/crash", (c) => {
-  process.exit(1);
+  process.exit(0);
 });
 
 app.get("/stress", (c) => {
   stressCpu();
-  return c.text('STRESS');
+  return c.text("STRESS");
 });
 
-export default app;
+export default {
+  fetch: app.fetch,
+  port: 8080,
+};
