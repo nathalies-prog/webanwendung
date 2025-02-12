@@ -2,6 +2,11 @@ import { Hono } from "hono";
 
 const app = new Hono();
 let state = 0;
+function stressCpu() {
+  while (true) {
+    Math.sqrt(Math.random());
+  }
+}
 app.get("/", (c) => {
   return c.text("Hello Hono!");
 });
@@ -24,13 +29,18 @@ app.get("/add", (c) => {
   return c.json(state);
 });
 
-app.get("/reset", (c) => {  
+app.get("/reset", (c) => {
   state = 0;
   return c.json(state);
 });
 
 app.get("/crash", (c) => {
   process.exit(1);
-})
+});
+
+app.get("/stress", (c) => {
+  stressCpu();
+  return c.text('STRESS');
+});
 
 export default app;
